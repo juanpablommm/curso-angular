@@ -1,27 +1,23 @@
-# CursoAngular
+# CursoAngular 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+# Clase 1 - Creacion de un proyecto - Conceptos Basicos
 
-## Development server
+* Para generar un proyecto en angular luego de la instalacion de NodeJS y el AngularCli
+debemos de jecutar el comando `ng new "nombre"` lo cual nos creara un proyecto con la estructura necesaria 
+para comenzar a trabajar, donde se nos preguntara antes de crearlo, si queremos que la aplicacion contenga 
+**routing** y si queremos que la app tenga un procesador de css, o css nativo.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* Una vez estemos dentro del proyecto ya creado para ejecutar el el cliente de angular, siempre utlizaremos `ng`
+seguido del comando que necesitemos como en el caso de la creacion, **ya una ves estemos trabajando dentro de la appp
+cada vez que qureamos crear algo dentro utlizamoremos** `ng generate` junto con lo que vallamos a crear,
+por ejemplo para crear un compoente `ng generate component "nombrecomponente"`o mediante los alias, `ng g c` donde la
+g esta representado a la plabra generate y la c a la palabra component, del mismo modo, cuando
+necesitemos crear un service o algo mas de angular para la app, `ng generate service "nombreservice"`
 
-## Code scaffolding
+* Para correr el proyecto podemos usar el comando `ng serve` que nos dara una espcie de servidor para poder
+consultar el proyecto en el localhost bajo el puerto que se defina, nos preguntara si quermos ver las metricas
+de analitica, esto ya para temas mas avanzados...
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Este comando tiene unas opciones como `-o` paraindicar que apenas levante el proyecto no nos muestre en el browser,
+como tambien la opcion `--port="puertoMaquina"` donde podremos elegir un puerto para arrancar la aplicacion.
+![image](https://github.com/juanpablommm/curso-angular/assets/62717509/83040dc8-f75a-451f-8a7c-840680d159a4)
