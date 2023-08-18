@@ -1,4 +1,36 @@
+<h2>Directivas de attributo</h2>
+
+<h3>Directiva de Atributo ngClass</h3>
+<! aplicamos una directiva de atributo, de tipo ngClass, donde le asinasmo a nuestro elmento parrafo de html,
+una clase messageSuccessful en caso de que el atributo de el compoente sea true, y sepanrando como una coma, podemos
+aplicar otra clase messageError en dado caso de que esta sea false, esta clases tiene disntios estilos css definidos
+en el archivo de estilos de este compponente>
 <p [ngClass]="{'messageSuccessful': messageSuccessful, 'messageError': !messageSuccessful}" >hello wolrd, soy una directiva de atributo ngClass, vamos a compobar si un msaaje es exitoso
 para asignarme una clase al elmento parrafo de html :)</p>
 
-<input value="cambia el estado del mensage" type="button" (click)="" )>
+
+<!definimos un boton que cambie ese valor en base a un metodo del compoente, que le cambia el valor ala atributo,
+y ese se mandara a llmar al lanzarce el evento clik del elmento input que es de tipo button>
+<input value="cambia el estado del mensage" type="button" (click)="cangeStatusMessage()" >
+
+<hr>
+<h3>Directiva de Atributo NgStyle</h3>
+<!la directiva de atributo ngStyle, basicmanete nos permitra aplicar un sitlo inlene de css, sobre el elmento html,
+donde la sintasis es muy similar a la ngClass, solo que podemos hacer una validacion ternaria, para dar un valor a la
+proidedad css que estamos palicando en base a un true de la condicion, que evaluemos o en base a un false que se obtenga>
+<p [ngStyle]="{'color': messageSuccessful? 'aqua': 'red'}">hello, soy una direciva de atributo ngStyle, sirvo para colocar un sityle inline sobre un elmento html, en
+base a que cumplamos con una condicion, me ligo a operadores ternarios para dicha condicion</p>
+
+
+
+<hr>
+<!cuando vallamos a poener la directiva de atributo ngModl a un input, nos lanzara un mensaje de error diciendonos que no se podra
+poner esta caracteristica o una propida conocdad del elemnto input, para ellos, debemos ir a nuestro modul, e imporar el
+FormsModule, que viene del propio angular, este es para trbajar con formularios y como los inputs van dentro de un formlario
+en su mayoria cuando lo usamos entonces por eso lo necesitamos>
+<h3>Directiva de Atributo ngModel</h3>
+<p>Esta directiva de atributo, basicamente nos permitira asociar un atributo del compoente o varible como se quiera decir
+en un input para controlar el valor, muy util para los formularios, esta se agrega como [()] a diferencia de las otras dos directivas anteriores[]</p>
+<input type="text" [(ngModel)]="message">
+
+<p [ngClass]="{'messageSuccessful': messageSuccessful}">hello soy el valor del la varible vinculada al input con ayuda del gnModel => {{message}}</p>

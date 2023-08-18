@@ -6,15 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./attribute.component.css']
 })
 export class AttributeComponent {
-  private _messageSuccessful: boolean = true;
+  messageSuccessful: boolean = true;
 
+  message: string = 'hello world';
 
-  set messageSuccessful(value: boolean) {
-    this._messageSuccessful = value;
-  }
-
-
-  get messageSuccessful(): boolean {
-    return this._messageSuccessful;
+  cangeStatusMessage(){
+    this.messageSuccessful = !this.messageSuccessful;
   }
 }

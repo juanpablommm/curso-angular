@@ -1,1 +1,56 @@
-<p>estructural works!</p>
+<h1>Directivas Estructurales</h1>
+
+<h3>Directiva estructura *ngIf</h3>
+
+<!la directiva *ngIf basicmaente nos permitra poder nosotros mostrar un elemento html, o todo un loque de html,
+que dentagmos, dado si la colocamos en una elemento html que contenga mas elmento sdentro, en base a si se cumple una condicion
+en esta caso por ejemplo comparamos que el valor de la variable sea true si es asi pues se podra rendrizar de lo contrario no
+se renderizara este elemento>
+<div *ngIf="varforngIf">
+  <p>hello, soy un bloque de codigo html, marcado con la directiva *ngIf,
+  me renderizara solo si se cumple la condicionarl del if</p>
+  <img src="https://img.asmedia.epimg.net/resizer/g_RLDb8finjtf7I8HpVJvXA9kgs=/1472x828/cloudfront-eu-central-1.images.arcpublishing.com/diarioas/7Z7LMMRBHVNKJKN64V425E7SOA.jpg"
+  height="25%" width="25%">
+</div>
+
+<input type="submit" value="*ngIf oprimmeme" (click)="changeValueVarforngIf()">
+
+
+<h3>Directiva Estructural *ngFor</h3>
+
+<!la directiva *ngFor no es mas que un bucle que nos permiira interar sorbre una lista o array o demas,
+por cada elmento que existe nosotros renderizar un elmento html>
+como en este caso, estamos renderizando un li de un lista desordenada, y un span dentro de ese lmento en el cual
+atravez de la interpolacion le damos el el valor de la vaiblre que utlizamos para iterar el buble
+<p>hello, soy la directiva *ngForn y estoy iterando sobre un lista de string</p>
+<ul>
+  <li *ngFor="let pet of listaPets">
+    <span>{{pet}}</span>
+  </li>
+</ul>
+
+<input type="button" value="agregua un elmento" (click)="addArray()">
+
+
+<h3>Directiva Estrcutural *ngTemplateOutlet</h3>
+<!la directiva *ngTemplateOutlet nor permitira declara un bloque de codigo html, pero que no sera renderizado,
+hasta que no lo mandemos a llamar en base a una condicional o simplemnte con el nombre, sin validar nada,
+para utlizarla el bloque de codigo html, o lementos que queremos declarar pero que no sean vibles sino hasat que las llamemos,
+las envolvemos con una eiqueta ng-template, en la cual podemos utlizar el simbolo # para darle una referenica a nuestra templete
+y poderla llmar cuando la necesitemos,
+
+para llamarla tiene que ser dentro de una etiqueta ng-container, en donde es ahy que estaremos aplicando la directiva estructural
+*ngTemplateOutlet como tal, y en la cual le podemos pasar el nombre de la referencia que le dimos a nuestro bloque de codigo que envolvimos
+con ng-template y hacer que se renderice ahora si, o validarlo mediante una condicional, aprovechando el operador ternario,
+en donde si el resultado es false pues simplmente psamos un null como referencia, y no se renderizaria nada o pasamos otra referencia de otra
+ng-template, segun sea nuestra necesidad.
+es muy similar a una directiva *ngIf, pero mucho mas potente dado que tiene otras funcionalidades mas>
+<ng-template #myngTemplate>
+  <p>hello, soy una directiva *ngTemplateOutlet, me declaraon, y no sere renderizada hasata que se me lllame
+  en un ngContianer, especificando el la referencia que me asignaron</p>
+</ng-template>
+
+
+<ng-container *ngTemplateOutlet="myngTemplate"></ng-container>
+
+

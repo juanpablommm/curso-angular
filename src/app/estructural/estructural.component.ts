@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class EstructuralComponent {
 
+  varforngIf: boolean = true;
+
+  listaPets: String[] = ['Dong', 'Cat', 'Monkey', 'Tiger'];
+  changeValueVarforngIf():void{
+    this.varforngIf = !this.varforngIf;
+  }
+
+  addArray(){
+    this.listaPets.push('hello soy nuevo')
+  }
+
+
 }
