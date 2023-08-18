@@ -1,77 +1,57 @@
 # CursoAngular
 
-# Clase 3 -Componentes
+# Clase 4 -Directivas
 
+Las Directivas son una caracteristica, un feature pilar de angular, que basicamente nos permite
+extender una funcionalidad del html, de un elmento html.
 
-AL momento que creemos un nuevo compoente en nuestra aplicacion, veremos como se crean nuestros 4 archivos; la template
-que seria el archivo html de ese compoente, el archivo de estilos para ese compoente, el archiuvo typeScript del compoente
-que vasiamente es el que lo definie, y el que lleva toda la logica de ese componente, y el archivo de pruebas.
-Ahora al momento de que este componente es creado veremos como se agreaga al **modulo root** en el Por el momento podemos decir que un **modulo** es el encargado de decirle a angular que existe un compoente
-y que lo debe renderizar.
+![image](https://github.com/juanpablommm/curso-angular/assets/62717509/e2d59893-080f-4884-92a0-4483004cdfa7)
 
-Por otro lado una definicion mas teorica seria que un módulo de Angular, es un conjunto de código dedicado a un ámbito concreto de la aplicación, o una funcionalidad específica y se define mediante una clase decorada con @NgModule.
+Sabemos que los compoentes son el elmento mas pequeño en el desarrollo front moderno.
+Ahora para el tema de las directivas, tenemos tres tipos.
+* **Directivas de tipo Component** que basicamente como su nombre lo dicen no son mas que los mismos componentes, que creemos,
+dado que si lo analizamos bien **un componente no es mas que un elmento html con funcionalidad extendida, muestro
+algo en el html, y le agrego una funcionalidad que tengamos en el archivo typeScript, un metodo que calcule la fecha altual, 
+un metodo que realice una suma o x logica que yo quiera,** ahora esta directivas de componente son solo los componentes que tienen
+una template html asociada
 
-Toda aplicación de Angular tiene al menos un módulo de Angular, el módulo principal (o root module).
+-----------------------------------------------------------------------------
+* **Directiva de tipo atributo** estas modifican la apariencia o comportamiento de **un elemento del DOM, utlizandoce como atrinutos 
+de un elemento html** esto incluye que una directiva de atributo puede modifcar tambien un compoente, porque recordemos que un compoente
+lo establcemos con una etiqueta html con el nombre que le hallamos dado a ese compoente.
+![image](https://github.com/juanpablommm/curso-angular/assets/62717509/61e9c12b-2308-40a9-a23f-e9d9071c1890)
+De este tipo de riectivas tambien tenemos bascimante 3 subtipos que serian:
 
-Ahora para saber cual es el componente principal que se esta renderizando en la SPA, pues simplemnte voya al index.html principal de la palicacion
-y hay podre observar ala etiqueta con el nombre del compoente, al ser una app recien creada pues observaremos que el compoente
-principal que se esta rederizando es el `app-root`
-```html
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>CursoAngular</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <!Observamos como el compoente que se esta renderizando es el compoente root de cuando recien se creo la aplicacion>
-  <app-root></app-root>
-</body>
-</html>
-```
-```typescript
-import { Component } from '@angular/core';
+* **ngClass** que basicmante como mencionamos es un atributo que se le da a un elmento html, pero con la funcionalidad de que estaremos
+dandole un nombre de una clase html al elemento, esto basandono a una condicion que establescamos, devolviendo el nombre de la case con 
+la que queremos marcar ese elmento html.
 
-/*cada component tiene ensima de la calse esto, a lo cual se le conoce como decorador,
-* que esta indicando que es un compoente, es algo similar a las anotaciones de spring.
-* un decorador no es mas uqe un conjunto de metadatos que definen un modulo, compoente, service o demas.
-* 
-* */
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class AppComponent {
-  title = 'curso_angular';
-}
+* **ngStyle** esta driectiva de atributo es basicamente lo mismo que la anterior, pero para aplicar estilos css, es como si tuvieramos un 
+style inline en un elmento html pero de manera dinamica., podiendo trar por ejemplo el valor de un colo a establecer desde un atributo definido 
+en un compoente o un base a una condicion
 
-```
+* **ngModel** esta directiva de atributo basicamente lo que hara es que nos permitira anexar una varible que tengamos por ejemplo
+en un compoente a un input de un formulario para poder aplicar un control sobre ellos, por ejemplo para controlar que lo que este escribiendo
+dentro de un input se almacene dentro de la variable que le definamos con el ngModel.
 
-En un compoente podremos aprecriar un decorador ``@Compoent``, similar a las anotaciones de spring, que no es mas
-que un objeto de metadatos que define un componente como en este caso, un modulo o demas...
-* El metadato **selector**, es el que definene un nombre o como su mismo nombre lo dice un selector desde el cual
-se podra llamar a redenrizar el compoente, tal como lo hace el index.html de la aplicacion con este compoente root.
-* El metadato **temaplateUrl** hace referencia al elmento html que se va a renderizar en este componente, el html de este compoente.
-* El metadato **styleUrl** al igual que el anterior inicara cual es el archivo de estilo css que le pertecne a este compoente
-El metadato templateUrl se puede cambiar por `template`
-para manejar el html en el mismo archivo que estamos manjando nuestro compoente, tal como si fuese un style inline en un archivo html 
- 
-Dentro de la clase del compoente podremos aplicar toda la logica js que necesitemos para nuestra aplicacion,
-como por ejemplo definir varibles o atrbituso, metodos, aplicar OOP y demas
+-----------------------------------------------------------------------------
 
-* Podremos usar la interpolacion de angular en el template, para aplicar codigo js, como por ejemplo traer el valor de un atributo del componente,
-o llamar un metodo, usando simpmente doble llaves `{{}}`.
-* De igual manera si queremos ejecutar algun metodo del compoente cuando se ejcute un evento en un lemento html, podemos
-apoyarnos de los parentris y angular nos mostrara una lista de loe ventos de los que dispoene ese evento, y poder nosotros
-mandar a llamar un metodo del compoente por ejemplo `()`.
-```html
+* **Directivas de tipo estructurales** son aquellas que alteran la estructura de DOM, y comienzan con el prefijo *, mientras que las 
+directivas de atributo alteran la apariencia o comportamineto sobre un atributo html, las **directivas extructuras puden alterar la extructira
+del DOM, pueden agregar mas elementos al DOM, o quitarlos, o modificarlos, pueden ocultarlos, renderizalos depues de un tiempo, etc** de igual manera
+estas se ponen como si fuera un atributo del elmento html.
+![image](https://github.com/juanpablommm/curso-angular/assets/62717509/ff8aa7ab-a491-4577-95dd-57b5c8fbe29e)
 
-<button (click)="sumar()" >this is the sume</button>
+* ***ngIf** esta directiva se coloca como atributo de un elmento hml, y en base a ellea lo que se hara es evaluar un condicional,
+que si se cumple, pues nos permitira renderizar el elmento html que contiene esta directiva.
 
-<h3>Este es el valor de la suma del metodo definido en el compoente {{num}}</h3>
+* ***ngFor** bascimante es como llevar un bucle for a el html, haremos un recorrido sobre alguna array o lista, al estilo forech, si exiten elementos
+pues se dibjura la eiqueta por cada elmento que tengamos en la lista, en donde podrmoes ir accediendo a los atributos de cada elmento de la lista
+apoyandonos de la interpolacion de angular.
 
-```
+* ***ngTemplateOutlet** este basicmaente nos permitira renderizar un bloque de html que tengamos dentro de una etiqueta `<ng-template>` con un ide espcieal que le asignemos
+para identificarlo mediante `#name` en el momento que yo lo llame, mediante una etiqueta `<ngContainer *ngTemplaOutlet=""ideDeLaTemplate">`, de esta manera esta la ngTemplate
+pero no se renderizara hasta que la mandemos a llamar.
+
+Podemos mezclar esas direcitvas sengun las necesidades que tenemos, como por ejemplo aplicar un *ngIf para validar si exite algun atributo que tengamos en el copoent
+validando una condicionar si se aplica listo, por ejemplo podmoes recorrer una lista con *ngFor
