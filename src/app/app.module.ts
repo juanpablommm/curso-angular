@@ -8,6 +8,7 @@ import { EstructuralComponent } from './estructural/estructural.component';
 import {FormsModule} from "@angular/forms";
 import { PipesComponent } from './pipes/pipes.component';
 import { EstadosPipe } from './pipes/estados.pipe';
+import {CompraModule} from "./compra/compra.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,11 @@ import { EstadosPipe } from './pipes/estados.pipe';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    /*importamos el modulo de compra creado, para poder ser usado dentro de los componentes de este Module,
+    * de lo contrario no lo podremos usar, cuando coloquemos la etiqueta de ese modulo en una template nos
+    * dara un error en la aplicacion*/
+    CompraModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,69 +1,90 @@
 # CursoAngular
 
-# Clase 5 - PIpes
+# Clase 5 - Modulos
 
+Si tenemos claro que un compoente es la pieza minima de software en un proyecto de angular,
+un modulo no es mas que **la agrupacion de disntintos compoentes que se supone van a compartir
+cierta funcionalidad o cierta logica de negocio.**
+Un compoente en angular no puede existir si no esta puesto en un modulo, aunque esto es solo para la
+vercion 13 de angular e inferiores, desde la version 14, ya se pueden desarrollar proyectos sin Modules.
 
-Los pipes son una caracteristica que angular nos provee, cuya finalidad es poder transformar los datos que vallamos 
-a usar, basicamente es como una funcion que nosotros le vamos a pasar al html para transformar los datos
-que se estan mostrando alusuario, por ejemplo si necestiamos tranformar un string a uppercase, pero la repuesta que nos da
-un servidor no nos envia el dato hacie, no estair bien que la logica del compoente lo tubiera que modificar ese dato, solo para mostrarlo
-al usuario, pues estariamos agregando logica inecesaria a la clase del compoente, mientras que **un pipe nos pemitira
-trasnformar esos datos a por ejemplo upperCase sin alterar el atributo o variable, solo sera anivel visual para el cliente, la
-trnaformacion solo se hara en el html, no afectara al atributo del compoente en la clase**
-
-Para aplicar un pipe en el un templade, lo hacemos por medio de la interpolacion de angular y tulizando al pip operator,
-llamndo al pipe que queremos aplicar.
-```angular2html
-{{name .toString()| uppercase}}
-```
-
-Esto es sumante util, como por ejemplo si recivimos de un servidor un formato de fecha muy extension, y solo queremos mostrar
-mes y año, lo podemos hacer con el papi **date** y psandole uno de los muchos formatos de fecha que este pipe ya nos porvee.
-
-# Crear nuestros propios Pipes
-
-Para crear un piepe, tneemos que ejecutar el siguiente comando `ng generate pipe` y la ruta donde lo vamos a crear
-por ejemplo en una carpeta asociada a un compoenente.
-Este nos creara una clase typeScrip como la siguiente.
+* **Si creamos un compoente y este componente no esta declarado en un modulo, este compoente
+no va a poder renderizarse*
+Asi por ejemplo si yo voy a el Modulo de la app, y comento en el metadato `declarations` un modulo
+de los que se han venido trabajando la aplicacion me dara un error a renderizarse
 ```typescript
-import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'estados'
+@NgModule({
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    AttributeComponent,
+    EstructuralComponent,
+    //PipesComponent,
+    EstadosPipe
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class EstadosPipe implements PipeTransform {
+export class AppModule { }
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
-  }
-
-}
 ```
 
-* En donde podemos observa un decorador que lo define como un pipe, con un metadato
-name, que es el que nos permitira usarlo desde una template en la que estemos empleando
-interpolacion con algun tipo de dato y queremos transformarlo.
 
-* Y observamos una funcion  transform, que recibe dos argumentos un value, y un argumento varible
-el value seria el valor de la varible que estara recibiendo cuando le apliquemos el pipe y el argumento
-de tipo varargs seran los argumentos que nostros desemos pdir para ampliar su funcionalidad.
-como por ejemplo los argumentos del tipo de formato que queremos mostrar, en donde se lo psamos al pipe.
+![image](https://github.com/juanpablommm/curso-angular/assets/62717509/9deaea38-15cf-45a0-90f5-71f1b4e63308)
 
-* El uso del pipe es sumante importante, si por ejemplo un servidor nos llegase a devolver un valor bolean
-o numerico que para ser mostrado al cliente no se podria visualizar de esa forma, dado que represente por ejemplo
-el estado de una transacion ya sea APROVADA, o RECHAZADA, en esos casos podria usar un pipe
+Donde se nos mencionara que nos exite el compoente, no es algo conocido, desde el lugar que lo estemos llamando, en este
+caso que se esta llamando del compoente root, puesto que para poder utlizar un coponente tendria que estar incluido dentro de un modulo
+para poderlo utilizar.
 
-El pipe que creemos lo podremos llamar de la misma forma que emos echo, pasandole paraemtros en caso
-de que los tengamos configurados para la logica del pipe `{ nameVariable | namePipe}`
+* Siempre en una aplicacion de angular cuando la creemos el Module principal es el `appModule` y en base a esto 
+nosotros podemos crear nuevos modulos, agrupar nuestros componentes en ese modulo, y simplemente exportarlo y llmarlo dentro de `appModule` para tener 
+esa funcionalida encapsulada
 
-# **Nota Impotante:**
-Sabemos en que la interpoalacion podemos ejecutar codigo js, y bien podriamos hacer el trabajo de el pipe, mediante una funcion que 
-este definida en el compoente, pero primero esot causara que ensusiemos el codigo del compoente con funcionalidades
-que muy probablemente no son de alta cohesion para la case y en seundo lugar **esto no se deb hacer por que causara errores
-que puden dañar la aplicacion colapsarla, dado que si llamos unfiones en un interpolacion que estemos haciendo para asignarle
-valores a un elmento html, eso causara que se este ejcutando muchas vaces esa funcion, dado que como es metodologia de una SPA,
-la aplicacion angular estara escuchando a que courran cualquier cambio en uno de los compotnes para el renderizado
-por lo cual si se aplicara un cambio minimio en uno de los compoentes donde aplicos esto, se ejecutara la funcion, y estaremos
-mandadola allmar muchas veces por cada renderizada que se haga del compoente, ocasionando lentitud**
+* Para crear un Module aplicamos el comando `gn generate module` mas el cnombre que le queramos dar.
+```typescript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-Cosa que por el contrario no courre con los pipes, dado que para eso es que angular mos dispoene de estos.
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule
+  ]
+})
+export class CompraModule { }
+
+```
+
+donde observaremos una clase typeScript tal como con un compoente, con un pipe o demas, con un decorador,
+un decorador que indica que es un **Module**, se puede observar como los metadatos de ese decorador
+estan practicamente vacios, no existe ningun compoente asociado al metada `declarations`, no ahy un metadado
+`bootstrap`pero el metadato bootstrap es el que indica la vista raiz, el compoente principal de la app, por ende 
+este metadato solo debe llevarlo el Module root de la aplicacion, no se ve nada en comparacion al Module principal de la app.
+
+* Ahora al momento de crear un nuevo modulo, y empezemos a crear los compoentes que hara parte de este, debemos 
+especificar la ruta de la carpta donde se creo el Module para crearlos por ejemplo `ng generate compoent compras/listado`
+lo que sucedera es que al momento de que se cree el component en esa ruta que se especifico, acutualizara
+el modulo que ahy se encuentra, y agregara los compoentes en el metadado `declarations` para que esten listos para
+ser renderizados en ese module, de coarde en donde se use ese mismo Module.
+
+* Para nosotros poder utlizar un compoente definido en un Modulo disntinto del Module root, que hallamos creado en la app,
+necesitaremos como primero que todo importar el modulo dentro del compote que lo vallamos a utlizar, en este caso lo utlizaremos
+en el modulo root. por locual dentro del metadato `imports` se agregaria el componente para poder usarlo, y en segunda opcion
+debemos de haber en el modulo que se creo y que estamos importando,cuales son los compoentes que se exportaran, para que puedan ser utlizaddos
+desde afuera de otros Modules, esto los hacemos con el metadato `exports` en el decorador de nuestro Module que creamos.
+Dado que los compoentes que tengamos en un modulo, declarados, solo son propios de ese modulo, y no los podran utilizar otros modulos, solo 
+podremos usar fuera del modulos los componentes que decidamos exportar, ahora eso no signica que los que no se exportan, van a dar un
+error ne la aplicacion o algo, esos se renderizaran en donde se esten usando pero solo dentro del modulo en el que estan declarados,
+si un componente ese modulos los usa, y ese es el compoente que se exporta, se renderizara sin ningun problema los componentes que ese componente
+esete usando y que no fueron exportados para ser usados en otros modulos.
+
+
+* Esto es sumamente importante puesto que al dominarlo podremos crear nuestras aplicacions de una manera muy atomica y muy escalable, ya que en un modulo,
+tendremos toda la logica relacionada a una funcionalidad de negocio,  y asi separar todo en unidades logicas,
+que actuan como unica unidad, compoartiendo esa informacion y compoentes entre si, asi cuando alguien nuevo llegue, solo tendra que modficar
+un modulo en especifico sin afectar a los demas.
