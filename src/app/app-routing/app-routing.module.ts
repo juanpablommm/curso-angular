@@ -5,6 +5,7 @@ import {NuevaCompraComponent} from "../compra/nueva-compra/nueva-compra.componen
 import {EstructuralComponent} from "../estructural/estructural.component";
 import {ListadoComponent} from "../compra/listado/listado.component";
 import {HistorialCompraComponent} from "../compra/historial-compra/historial-compra.component";
+import {authGuard} from "../auth.guard";
 
 
 /*se crea un array de Routes, en donde basicamente tnedremos que defnir objetos
@@ -12,8 +13,17 @@ import {HistorialCompraComponent} from "../compra/historial-compra/historial-com
 * en le metodo forRoot y de esta manera estaremos configurando nuestros path de la aplicacion, para el path que especifiquemos
 * en un objeto del arreglo el compoente que definamos en la propidad component sera el que se renderizara*/
 const routes: Routes = [
+  /*estamos configuranod un path por defaul para que al momento que el usuario dentre ela host principa de la palicacion
+  * sea redirecionado a un path por default, tiene que ser un path ya esistente, en este caso al path de pipes, aun bien
+  * podriamos mandar a renderizar un compoenente en este path lo recomendable es mandarlo a uno ya existente.
+  * y con la propiedad patchMacht lo que hacemos es que tome el pathc completo es decir hppt://localhost:8008 por ejemplo
+  * y no un path relativo*/
+  {path: '', redirectTo: 'pipes', pathMatch:'full'},
   {path: 'pipes', component: PipesComponent},
-  {path: 'estructural', component: EstructuralComponent},
+  {path: 'estructural', component: EstructuralComponent,
+    /*para aplicar guards que validen y brinden seguridad a nuestros path, segun la logica que
+    * hallamos configurados en ellos, utlizamos en atributo canActive, pasandole uno o varios guards*/
+    canActivate:[authGuard]},
   {path: 'compra', component: ListadoComponent, children:[
       {path: 'nueva', component: NuevaCompraComponent},
       {path: 'historial', component: HistorialCompraComponent}

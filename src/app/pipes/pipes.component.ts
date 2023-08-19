@@ -15,4 +15,11 @@ export class PipesComponent {
   changeStateTransaction():void{
     this.transactionState = (this.transactionState == 1)? 2: 1;
   }
+
+
+  /*simulamos que tenemos un id del suario, traido de una api rest, y los guardamos en el localStorage para
+  * validarlo en la logica que apliquemo en el guard y asi dar accesos o no a un recurso*/
+  constructor() {
+    localStorage.setItem('idUser', '1234');
+  }
 }
