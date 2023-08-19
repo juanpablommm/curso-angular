@@ -1,1 +1,11 @@
-<p>listado works!</p>
+<h2>Listado Component</h2>
+<hr>
+<!aplicamos nuestros botnes para que con yuda de la directiva routerLink nos redireciones a los paht hijos
+que hemos configurado en el RoutingModule para el path Compra el cual renderiza este compoente>
+<input type="button" value="Nueva Compra Component" [routerLink]="['/compra/nueva']" routerLinkActive="active">
+<input type="button" value="Historial Compra Component" [routerLink]="['/compra/historial']" routerLinkActive="active">
+
+<!este componente debe de tener el componente router-outlet, para poder que renderice y entre en juego la configuracion que aplicamos
+para los paht hijos de este componente que actua como contenedor de los demas compoentes de este modulo, de lo contrario
+no nos llevara a esos path>
+<router-outlet></router-outlet>

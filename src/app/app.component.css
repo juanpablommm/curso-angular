@@ -1,3 +1,7 @@
 /*probando un stilo para el primer compoente creado, este estilo que apliquemos ak, solo afectra al compoente root,
 en el cual estamos*/
 
+.active{
+  background: cadetblue;
+  color: aqua;
+}

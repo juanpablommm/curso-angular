@@ -1,5 +1,28 @@
-<h1>Utilizando compnentes de otros Modulos creadors</h1>
+<h1>Aplicando un RoutingModule para gestionar los path de la aplicacion</h1>
+<hr>
 
-<p>hola soy el compoente principal de la app, definido en el modulo root, estoy implementando al compoente, nueva compra del modulo de compra:</p>
 
-<app-nueva-compra></app-nueva-compra>
+<!par aplicar la redirecion hacia uno de los path que configuramos en el RoutingModule desde un boton,
+tendremos que usar la directiva routerLink y no con un evento clik, y en ella especificarmos el path a donde queremos
+ir, ya con esto el RoutingModule hara su trrabajo y nos rederizara el componente que hallamos configurado para ese path
+para esecificarlo que sea general, debemos de colocarlo en el componte root, tal como lo hacemos, y ya sea cual sea el componente
+que se renderize lo hara debajo del botun que hemos definido en estos momentos y seguira apareciendo los botones de navegacion en
+todos los path, lo idea seria hacerlo en un compoente header que gestione estos botnes de navegacion>
+
+<!tambien tenemos una directiva para saber si la ruta a la que hacemos referencia esta activa o nop,
+es decir si estamos en ella, y en base a eso aplicar algun estilo o algo para mostrarlo, eso lo hacemos con la
+directiva, routerLinkActive y le psamos la clase que tengamos de css para aplicar el estilo>
+<input type="button" value="Pipes Component" [routerLink]="['/pipes']" routerLinkActive="active">
+<input type="button" value="Estrcutural Component" [routerLink]="['/estructural']" routerLinkActive="active">
+<input type="button" value="Lsitado Compra Component" [routerLink]="['/compra']" routerLinkActive="active">
+
+
+
+<!debemos de colocar el router-outlet, para poder ya tener funcionando nuestro RoutungModule que configuramos,
+de esta manera gestionando el renderizado en base a cada path que configuramos,
+es importante que alguien contenga el router-outlet de lo contrario no funcionara la condiguracion de path
+que realizamos en nuestro RoutingModule que creamos>
+
+<router-outlet></router-outlet>
+
+
