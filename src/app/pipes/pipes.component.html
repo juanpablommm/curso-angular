@@ -1,0 +1,24 @@
+<!para aplicar un pipe simplemnte en la interpolacion que apliquemos en la que estemos assediendo a un atributo
+del compoente colocamos un pipe operator y mandamos a llamar uno de los pipes que anguar nos brinda, como en este
+caso el uppercase.
+Ahora si por ejemplo en este caso estamos tibando el atributo name en el compoente con un wrapper debemos de comvertirlo
+a un tipo primitivo para poder aplicarlo, en caso del string como este caso>
+<p>hello, soy un dato transformado a uppercase con un pipe valor => {{name}} => {{name .toString()| uppercase}}</p>
+<hr>
+<p>hello, soy un dato transformado a lowercase con un pipe valor => {{name}} => {{name .toString() | lowercase}}</p>
+<hr>
+<p>hello, soy un dato transformado a titlecase con un pipe valor => {{name}} => {{name .toString() | titlecase}}</p>
+
+<hr>
+<p>hello, soy un dato transformado a date en formato basico con un pipe valor => {{date}} => {{date .toString() | date}}</p>
+
+<-!para el pipe de Date, por podemos usar varios formatos ya definidos que encontraremos en al documentacion de angular,
+para mostrar segun nuestra necesidad, en este caso se le pasa un formato de month>
+<hr>
+<p>hello, soy un dato transformado a date en formato basico con un pipe valor => {{date}} => {{date .toString() | date:'month'}}</p>
+
+<h3>My propio Pipe</h3>
+
+<p>hello, soy un el pipe personalizado para leer el codigo de una tranzacion valor =>
+  {{transactionState}} => {{transactionState | estados}}</p>
+<input value="button change value transaction" type="button" (click)="changeStateTransaction()">

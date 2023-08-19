@@ -1,57 +1,69 @@
 # CursoAngular
 
-# Clase 4 -Directivas
+# Clase 5 - PIpes
 
-Las Directivas son una caracteristica, un feature pilar de angular, que basicamente nos permite
-extender una funcionalidad del html, de un elmento html.
 
-![image](https://github.com/juanpablommm/curso-angular/assets/62717509/e2d59893-080f-4884-92a0-4483004cdfa7)
+Los pipes son una caracteristica que angular nos provee, cuya finalidad es poder transformar los datos que vallamos 
+a usar, basicamente es como una funcion que nosotros le vamos a pasar al html para transformar los datos
+que se estan mostrando alusuario, por ejemplo si necestiamos tranformar un string a uppercase, pero la repuesta que nos da
+un servidor no nos envia el dato hacie, no estair bien que la logica del compoente lo tubiera que modificar ese dato, solo para mostrarlo
+al usuario, pues estariamos agregando logica inecesaria a la clase del compoente, mientras que **un pipe nos pemitira
+trasnformar esos datos a por ejemplo upperCase sin alterar el atributo o variable, solo sera anivel visual para el cliente, la
+trnaformacion solo se hara en el html, no afectara al atributo del compoente en la clase**
 
-Sabemos que los compoentes son el elmento mas pequeño en el desarrollo front moderno.
-Ahora para el tema de las directivas, tenemos tres tipos.
-* **Directivas de tipo Component** que basicamente como su nombre lo dicen no son mas que los mismos componentes, que creemos,
-dado que si lo analizamos bien **un componente no es mas que un elmento html con funcionalidad extendida, muestro
-algo en el html, y le agrego una funcionalidad que tengamos en el archivo typeScript, un metodo que calcule la fecha altual, 
-un metodo que realice una suma o x logica que yo quiera,** ahora esta directivas de componente son solo los componentes que tienen
-una template html asociada
+Para aplicar un pipe en el un templade, lo hacemos por medio de la interpolacion de angular y tulizando al pip operator,
+llamndo al pipe que queremos aplicar.
+```angular2html
+{{name .toString()| uppercase}}
+```
 
------------------------------------------------------------------------------
-* **Directiva de tipo atributo** estas modifican la apariencia o comportamiento de **un elemento del DOM, utlizandoce como atrinutos 
-de un elemento html** esto incluye que una directiva de atributo puede modifcar tambien un compoente, porque recordemos que un compoente
-lo establcemos con una etiqueta html con el nombre que le hallamos dado a ese compoente.
-![image](https://github.com/juanpablommm/curso-angular/assets/62717509/61e9c12b-2308-40a9-a23f-e9d9071c1890)
-De este tipo de riectivas tambien tenemos bascimante 3 subtipos que serian:
+Esto es sumante util, como por ejemplo si recivimos de un servidor un formato de fecha muy extension, y solo queremos mostrar
+mes y año, lo podemos hacer con el papi **date** y psandole uno de los muchos formatos de fecha que este pipe ya nos porvee.
 
-* **ngClass** que basicmante como mencionamos es un atributo que se le da a un elmento html, pero con la funcionalidad de que estaremos
-dandole un nombre de una clase html al elemento, esto basandono a una condicion que establescamos, devolviendo el nombre de la case con 
-la que queremos marcar ese elmento html.
+# Crear nuestros propios Pipes
 
-* **ngStyle** esta driectiva de atributo es basicamente lo mismo que la anterior, pero para aplicar estilos css, es como si tuvieramos un 
-style inline en un elmento html pero de manera dinamica., podiendo trar por ejemplo el valor de un colo a establecer desde un atributo definido 
-en un compoente o un base a una condicion
+Para crear un piepe, tneemos que ejecutar el siguiente comando `ng generate pipe` y la ruta donde lo vamos a crear
+por ejemplo en una carpeta asociada a un compoenente.
+Este nos creara una clase typeScrip como la siguiente.
+```typescript
+import { Pipe, PipeTransform } from '@angular/core';
 
-* **ngModel** esta directiva de atributo basicamente lo que hara es que nos permitira anexar una varible que tengamos por ejemplo
-en un compoente a un input de un formulario para poder aplicar un control sobre ellos, por ejemplo para controlar que lo que este escribiendo
-dentro de un input se almacene dentro de la variable que le definamos con el ngModel.
+@Pipe({
+  name: 'estados'
+})
+export class EstadosPipe implements PipeTransform {
 
------------------------------------------------------------------------------
+  transform(value: unknown, ...args: unknown[]): unknown {
+    return null;
+  }
 
-* **Directivas de tipo estructurales** son aquellas que alteran la estructura de DOM, y comienzan con el prefijo *, mientras que las 
-directivas de atributo alteran la apariencia o comportamineto sobre un atributo html, las **directivas extructuras puden alterar la extructira
-del DOM, pueden agregar mas elementos al DOM, o quitarlos, o modificarlos, pueden ocultarlos, renderizalos depues de un tiempo, etc** de igual manera
-estas se ponen como si fuera un atributo del elmento html.
-![image](https://github.com/juanpablommm/curso-angular/assets/62717509/ff8aa7ab-a491-4577-95dd-57b5c8fbe29e)
+}
+```
 
-* ***ngIf** esta directiva se coloca como atributo de un elmento hml, y en base a ellea lo que se hara es evaluar un condicional,
-que si se cumple, pues nos permitira renderizar el elmento html que contiene esta directiva.
+* En donde podemos observa un decorador que lo define como un pipe, con un metadato
+name, que es el que nos permitira usarlo desde una template en la que estemos empleando
+interpolacion con algun tipo de dato y queremos transformarlo.
 
-* ***ngFor** bascimante es como llevar un bucle for a el html, haremos un recorrido sobre alguna array o lista, al estilo forech, si exiten elementos
-pues se dibjura la eiqueta por cada elmento que tengamos en la lista, en donde podrmoes ir accediendo a los atributos de cada elmento de la lista
-apoyandonos de la interpolacion de angular.
+* Y observamos una funcion  transform, que recibe dos argumentos un value, y un argumento varible
+el value seria el valor de la varible que estara recibiendo cuando le apliquemos el pipe y el argumento
+de tipo varargs seran los argumentos que nostros desemos pdir para ampliar su funcionalidad.
+como por ejemplo los argumentos del tipo de formato que queremos mostrar, en donde se lo psamos al pipe.
 
-* ***ngTemplateOutlet** este basicmaente nos permitira renderizar un bloque de html que tengamos dentro de una etiqueta `<ng-template>` con un ide espcieal que le asignemos
-para identificarlo mediante `#name` en el momento que yo lo llame, mediante una etiqueta `<ngContainer *ngTemplaOutlet=""ideDeLaTemplate">`, de esta manera esta la ngTemplate
-pero no se renderizara hasta que la mandemos a llamar.
+* El uso del pipe es sumante importante, si por ejemplo un servidor nos llegase a devolver un valor bolean
+o numerico que para ser mostrado al cliente no se podria visualizar de esa forma, dado que represente por ejemplo
+el estado de una transacion ya sea APROVADA, o RECHAZADA, en esos casos podria usar un pipe
 
-Podemos mezclar esas direcitvas sengun las necesidades que tenemos, como por ejemplo aplicar un *ngIf para validar si exite algun atributo que tengamos en el copoent
-validando una condicionar si se aplica listo, por ejemplo podmoes recorrer una lista con *ngFor
+El pipe que creemos lo podremos llamar de la misma forma que emos echo, pasandole paraemtros en caso
+de que los tengamos configurados para la logica del pipe `{ nameVariable | namePipe}`
+
+# **Nota Impotante:**
+Sabemos en que la interpoalacion podemos ejecutar codigo js, y bien podriamos hacer el trabajo de el pipe, mediante una funcion que 
+este definida en el compoente, pero primero esot causara que ensusiemos el codigo del compoente con funcionalidades
+que muy probablemente no son de alta cohesion para la case y en seundo lugar **esto no se deb hacer por que causara errores
+que puden dañar la aplicacion colapsarla, dado que si llamos unfiones en un interpolacion que estemos haciendo para asignarle
+valores a un elmento html, eso causara que se este ejcutando muchas vaces esa funcion, dado que como es metodologia de una SPA,
+la aplicacion angular estara escuchando a que courran cualquier cambio en uno de los compotnes para el renderizado
+por lo cual si se aplicara un cambio minimio en uno de los compoentes donde aplicos esto, se ejecutara la funcion, y estaremos
+mandadola allmar muchas veces por cada renderizada que se haga del compoente, ocasionando lentitud**
+
+Cosa que por el contrario no courre con los pipes, dado que para eso es que angular mos dispoene de estos.
