@@ -6,6 +6,7 @@ import {EstructuralComponent} from "../estructural/estructural.component";
 import {ListadoComponent} from "../compra/listado/listado.component";
 import {HistorialCompraComponent} from "../compra/historial-compra/historial-compra.component";
 import {authGuard} from "../auth.guard";
+import {VentaModule} from "../venta/venta.module";
 
 
 /*se crea un array de Routes, en donde basicamente tnedremos que defnir objetos
@@ -27,7 +28,12 @@ const routes: Routes = [
   {path: 'compra', component: ListadoComponent, children:[
       {path: 'nueva', component: NuevaCompraComponent},
       {path: 'historial', component: HistorialCompraComponent}
-    ]}
+    ]},
+
+  /*de esta forma conseguiremos dos cosas, la primera es tener configurados los path de sede modulo de una manera totalmente
+  * independiente y la segunda, es que estos compoentenes no se cargaran en el inicio de la aplicacion, no estaremos cargandolos
+  * innecesariamente, soloa mente se cargaran cuando el usuario calla hacia el paht de venta*/
+  {path: 'venta', loadChildren: () => import('../venta/venta.module').then((m) => m.VentaModule)}
 ]
 
 @NgModule({

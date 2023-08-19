@@ -10,6 +10,7 @@ import { PipesComponent } from './pipes/pipes.component';
 import { EstadosPipe } from './pipes/estados.pipe';
 import {CompraModule} from "./compra/compra.module";
 import {AppRoutingModule} from "./app-routing/app-routing.module";
+import {VentaModule} from "./venta/venta.module";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,10 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
     * router-outlet que esta en toda la configuracion que realizamos con nuestro RoutingModule y la importacion
     * del Module RouterModule en ese Module y de esta manera podres tener una configuracion de paths que se nos renderizara el
     * componente establecido para el paht que configuramoe en el RoutingModule que creamos*/
-    AppRoutingModule
+    AppRoutingModule,
+
+    /*importamos el Module de venta para poder usarlo en el RoutingModuel de este Modulo root*/
+    VentaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

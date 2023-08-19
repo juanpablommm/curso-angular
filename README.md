@@ -1,36 +1,34 @@
 # CursoAngular
 
-# Clase 8 Guards
+# Clase 9 lazy loading en las Rutas
 
-* Establecer una ruta poe defual, para la aplicacion, para hacer eso simplemente vamos a la configuracion
-de paht que tenemos en nuestro RoutinngModule, y configuramos un path vacio, y aplicamos la
-propiedad redirectTo y le pasamos un path ya definido, aunqe bien le podriamos pasar un compoente para que redirecione,
-lo recomendable es pasarle un path ya existente, y especificamos con la propiedad pathMatch full, para indicarle que tome toda la
-ruta, de esta menaera cuando el suaurio ingrese al host principal de l app, sera redirecionado al paht que definimos como por defualt.
-```typescript
-{path: '', redirectTo: 'pipes', pathMatch:'full'}
-```
 
-Generalmente antes de que nosotros queramos que el usuario acceda a una ruta, van aver ocaciones en que queremos confirmar algo, por ejemplo
-si el usuario esta logueado o no en la aplicacion, si el usuario tiene permiso o no para aceder al recurso, y es para eso que angular nos provee 
-los **Angular Guards**, para crear un guard tenemos que ejeuctar el comando `ng generate guard` mas el nombre que le queramos dar.
-y nos preguntra que tipo de guar queremos crear.
+Con las aplicaciones SPA, sucede que al monento de que inican, cargan una vez al incicio todos 
+los modulos y ya despues el usuario puede recorrer entre ellos, sin necesidad de que la pagina
+se recargue, por lo cual si, nosotros tenemos muchas paginas, muchas rutas y muchos compoentes, puden
+hacer que la carga inicial de la aplicacion sea un poco lenta.
 
-![image](https://github.com/juanpablommm/curso-angular/assets/62717509/423114eb-3ee0-495e-b5d3-546ba68f93e4)
+**Para esto existe el famoso lazy loading** que basicamente sifnigca carga peresoza, y consiste en
+hacer una carga a demanda de los modulos que definamos, asi por ejemplo **si nosotros tenemos 10 modulos,
+de los cuales sabemos que solo van hacer de mañor uso solo dos modulos, pues estos van a cargar en el inicio 
+de la aplicacion y los demas modulos van a cargar cuando el usuario intente entrar a la ruta de cada modolo, haciendo
+de esta manera que la carga inical sea mucho mas rapida y cuando el usuario quiera entrar a una de esas rutas,
+va a recien descargar ese modulo, y no al inicio de la aplicacion evitando saturarla con modulos que en lo probable
+el usuario no usara al inicio de la aplicacion**
 
-El primero **canActive** lo que nos permitira es ver si el usario puede ingresar a una ruta.
-```typescript
-import { CanActivateFn } from '@angular/router';
+Cargar un modulo a la vez, no va causar incoveniente, pero cargar por ejemplo 40, 50 modulos is la aplicacion ay es muy
+grande va a costarle a la aplicacion.
 
-export const authGuard: CanActivateFn = (route, state) => {
-  return true;
-};
+Para aplicar esto al momento de crear un modulo debemos de pasarle unos comandos mas.
+`gn generate module venta --routing=true` de esta manera se creara una carpeta en la cual encontraremos el Module, y encontraremos 
+un RoutingModule para ese modulo, el cual ya  estara importado en el Module para su uso.
+donde lo que procedemos hacer es configurar los path para los componentes de ese Module en el RoutingModuel, configurando un path por
+defualt y ese Module lo iportamos al Moduerlo root para poderlo usar en el RoutingModule del Modulo root, en donde
+seimpmente foniguraremos un path de la siguiente manera.
+` {path: 'venta', loadChildren: () => import('../venta/venta.module').then((m) => m.VentaModule)}
+`
 
-```
-
-Los guard se crean en la ruta pero no se agregan a los modulos, porque no lo necesitan
- 
-Aplicaremos la logica que necesitamos para que valide si le damos accesos o no a un path de la aplicacion,
-como pude ser aplicar un consumo a una pia rest y para validar autenticacion y en base a elle devolver true o false,
-ya con esto agregamos el atributo `canActive` que poemos pasarle uno o varios guard en donde estamos configurando los path, en el 
-RoudingModule y se aplicara la validacion, si renderizara el compoente que tengamos definido en el path, sino no avanzara.
+Logrando dos cosas con esta forma, primero que los path configurados para ese modulo, no los manera el RoutingModule del Module root,
+sino que los manejara el propio modulo, siendo mas elegible y organizado, y en segund lugar **que al momento de que se cargen los
+compoentes en el inicio de la aplicacion no se cargara todavi los compoentes de ese Module, evitanto carga inencesaria, solamente
+se cargaran cuando el suario ya le de en el path**
